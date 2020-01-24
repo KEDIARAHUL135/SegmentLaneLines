@@ -14,5 +14,10 @@ WAITKEY_VALUE = 0
 
 
 # Lower and upper bounds for masking
+# This mask bounds are generally found useful for white and yellow colours as required.
 LOWER_BOUND = np.array([0, 0, 180])
 UPPER_BOUND = np.array([255, 255, 255])
+
+
+# VAriable for hough lines
+MIN_LINE_LENGTH = MIN_LINE_LENGTH_FIX = 50
