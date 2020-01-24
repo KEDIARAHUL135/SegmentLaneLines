@@ -28,15 +28,27 @@ def FindLines(MaskImage, Image):
     EdgeImage = cv2.Canny(MaskImage, 10, 10, apertureSize=3)
     Lines = cv2.HoughLinesP(EdgeImage, 1, np.pi / 180, 10, minLineLength=M.MIN_LINE_LENGTH, maxLineGap=40)
 
-    if Lines is not None:
-        for Line in Lines:
-            for x1, y1, x2, y2 in Line:
-                if y1 >= Image.shape[0]/2 and y2 >= Image.shape[0]/2:
-                    cv2.line(Image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    if M.CROP_IMAGE_or_LOWER_HALF_APPROACH == 1:
+        if Lines is not None:
+            for Line in Lines:
+                for x1, y1, x2, y2 in Line:
+                    if y1 >= Image.shape[0]/2 and y2 >= Image.shape[0]/2:
+                        cv2.line(Image, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-    else:
-        M.MIN_LINE_LENGTH -= 1
-        FindLines(MaskImage, Image)
+        else:
+            M.MIN_LINE_LENGTH -= 1
+            FindLines(MaskImage, Image)
+
+    elif M.CROP_IMAGE_or_LOWER_HALF_APPROACH == 0:
+        if Lines is not None:
+            for Line in Lines:
+                for x1, y1, x2, y2 in Line:
+                    cv2.line(Image, (x1, y1 + int(Image.shape[0]/2)),\
+                             (x2, y2 + int(Image.shape[0]/2)), (0, 255, 0), 2)
+
+        else:
+            M.MIN_LINE_LENGTH -= 1
+            FindLines(MaskImage, Image)
 
     M.MIN_LINE_LENGTH = M.MIN_LINE_LENGTH_FIX
 
@@ -77,6 +89,9 @@ def FindMaskImage(InputImage):
 ################################################################################
 def ProcessImage(InputImage):
     MaskImage = FindMaskImage(InputImage)
+
+    if M.CROP_IMAGE_or_LOWER_HALF_APPROACH == 0:
+        MaskImage = MaskImage[int(MaskImage.shape[0]/2):, :]
     LanesImage = FindLines(MaskImage, InputImage)
 
 

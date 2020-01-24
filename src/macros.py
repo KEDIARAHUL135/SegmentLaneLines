@@ -19,5 +19,10 @@ LOWER_BOUND = np.array([0, 0, 180])
 UPPER_BOUND = np.array([255, 255, 255])
 
 
-# VAriable for hough lines
+# Variable for hough lines
 MIN_LINE_LENGTH = MIN_LINE_LENGTH_FIX = 50
+
+
+# Crop image approach or limit line to lower half approach
+CROP_IMAGE_or_LOWER_HALF_APPROACH = 0       # 0 for Crop Image Approach
+                                            # 1 for Limit line to lower half approach
