@@ -31,7 +31,8 @@ def FindLines(MaskImage, Image):
     if Lines is not None:
         for Line in Lines:
             for x1, y1, x2, y2 in Line:
-                cv2.line(Image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                if y1 >= Image.shape[0]/2 and y2 >= Image.shape[0]/2:
+                    cv2.line(Image, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
     else:
         M.MIN_LINE_LENGTH -= 1
