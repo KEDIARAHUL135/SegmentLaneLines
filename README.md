@@ -3,6 +3,10 @@
 This project aims to detect lane line on a road in a image.
 
 
+### Installation
+
+[Click here for installation procedure for this project.](https://gist.github.com/KEDIARAHUL135/c490e212966fec2751d62e193f341967)
+
 
 ### Approach
 
